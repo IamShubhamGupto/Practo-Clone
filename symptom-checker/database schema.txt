@@ -1,0 +1,27 @@
+(don't word wrap.)
+
+Database name: doctor_data
+Table name: doctor_data
+
+Columns: id(number), name(string/varchar), email(string), special(string), cond(string)
+
+example:1, Rhea, rhea@doctor.com, general physician, cold
+	2, Rhea, rhea@doctor.com, general physician, fever
+	3, Rhea, rhea@doctor.com, general physician, diarrhea
+	4, Rhea, rhea@doctor.com, general physician, headache
+	5, Anoushka, anoushka@doctor.com, cardiologist, heartburn
+etc.
+
+Note: Each doctor needs to have multiple rows associated with all the conditions ('cond' column) they take care of; even if information in all the other columns is the same.
+That's the reason doctor Rhea has multiple rows with the same entry for every column except 'cond'.
+
+To incorporate this, a separate column say 'main_doctor_id' can be created in this table doctor_data that serves as a link between this database and the main database.
+
+So, now the data might look something like this -
+
+id(PK), main_doctor_id(This one links to the main database), name   , email, special, cond
+1     , 001                                                , Rhea   , ...  , ...    , cold
+2     , 001                                                , Rhea   , ...  , ...    , fever
+3     , 001                                                , Rhea   , ...  , ...    , headache
+4     , 001                                                , Rhea   , ...  , ...    , diarrhea
+5     , 002                                                ,Anoushka, ...  , ...    ,heartburn
