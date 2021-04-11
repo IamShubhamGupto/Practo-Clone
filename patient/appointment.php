@@ -244,7 +244,8 @@ header("Location: patient.php");
 												<textarea class="form-control" name="comment" ></textarea>
 											</div>
 											<div>
-												<input type="checkbox" id="notif" name="notif" value="Enable notifications" href='scheduleSend4.php?app=" . $userRow['appId'] ."&prevscheduleid". $userRow['scheduleId']. "'/>
+											<!-- "scheduleSend4.php?userid='sindhurao385@gmail.com'&doctorid='shubhamgupto@gmail.com'&apptdatetime=$appdate&username='hi'&appid=$appid" -->
+												<input type="checkbox" id="notif" name="notif" value="Enable notifications" onclick = "callPHPNotif()" />
 												<label for="notif">Enable notifications</label><br>
 											</div>
 											<div class="form-group">
@@ -261,6 +262,20 @@ header("Location: patient.php");
 
 						</div>
 					</div>
+					<script>
+						function callPHPNotif(){
+							$.ajax({
+								type: "GET",
+								url: 'scheduleSend4.php?useremail='sindhurao385@gmail.com'&doctoremail='shubhamgupto@gmail.com'&apptdatetime=$appdate&username='hi'&appid=$appid',
+								success: function(){
+									window.alert("Successfully subscribed to email notifications!");
+								},
+								error: function(){
+									window.alert("Email Notifications failed !");
+								}
+							});	
+						}
+					</script>
 					<!-- USER PROFILE ROW END-->
 					<!-- end -->
 					<script src="assets/js/jquery.js"></script>
