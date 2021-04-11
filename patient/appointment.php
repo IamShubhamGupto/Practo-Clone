@@ -243,6 +243,10 @@ header("Location: patient.php");
 												<label for="message-text" class="control-label">Comment:</label>
 												<textarea class="form-control" name="comment" ></textarea>
 											</div>
+											<div>
+												<input type="checkbox" id="notif" name="notif" value="Enable notifications" href='scheduleSend4.php?app=" . $userRow['appId'] ."&prevscheduleid". $userRow['scheduleId']. "'/>
+												<label for="notif">Enable notifications</label><br>
+											</div>
 											<div class="form-group">
 												<input type="submit" name="appointment" id="submit" class="btn btn-primary" value="Make new Appointment">
 											</div>
