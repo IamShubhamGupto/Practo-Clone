@@ -1,4 +1,4 @@
-(make notepad full screen.)
+(don't word wrap.)
 
 Database name: doctor_data
 Table name: doctor_data
