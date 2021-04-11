@@ -266,7 +266,7 @@ header("Location: patient.php");
 						function callPHPNotif(){
 							$.ajax({
 								type: "GET",
-								url: 'scheduleSend4.php?useremail='sindhurao385@gmail.com'&doctoremail='shubhamgupto@gmail.com'&apptdatetime=$appdate&username='hi'&appid=$appid',
+								url: "scheduleSend4.php?userid='sindhurao385@gmail.com'&doctorid='shubhamgupto@gmail.com'&apptdatetime=$appdate&username='hi'&appid=$appid",
 								success: function(){
 									window.alert("Successfully subscribed to email notifications!");
 								},

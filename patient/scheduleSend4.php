@@ -90,9 +90,9 @@ function makeNotification(){
     echo "Sent success\n";
   }
 }
-if(isset($_GET["usermail"]) && $_GET["doctormail"]
-  && $_GET["apptdatetime"] && $_GET["username"]
-  && $_GET["apptid"]){
+if(isset($_GET["usermail"]) && isset($_GET["doctormail"])
+  && isset($_GET["apptdatetime"]) && isset($_GET["username"])
+  && isset($_GET["apptid"])){
     makeNotification();
 }
 ?>
