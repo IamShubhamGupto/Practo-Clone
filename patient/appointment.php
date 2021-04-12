@@ -71,7 +71,6 @@ header("Location: patient/patient.php");
 //dapat dari generator end
 }
 
-
 //UPDATE
 else if (isset($_POST['update'])) {
 $patientIc = mysqli_real_escape_string($con,$userRow['icPatient']);
@@ -123,7 +122,10 @@ header("Location: patient.php");
 
 }
 ?>
-
+<?php
+$date = new DateTime('04/12/2021 9:31');
+$sendDate = $date->format('d/m/Y H:i');
+?>
 
 <!DOCTYPE html>
 <html>
@@ -245,8 +247,18 @@ header("Location: patient.php");
 												<label for="message-text" class="control-label">Comment:</label>
 												<textarea class="form-control" name="comment" ></textarea>
 											</div>
+											<script>
+												function callPHPNotif(){
+													$.post("scheduleSend5.php",
+														{'usermail':'sindhurao385@gmail.com','doctormail':'shubhamgupto@gmail.com','apptdatetime': '<?php echo $sendDate ?>','username':'hi','apptid': '123'},
+													).done(function( data ) {
+														alert( "Data Loaded: " + data );
+													});	
+													// window.location.replace("scheduleSend5.php");
+												}
+											</script>
 											<div>
-											<!-- "scheduleSend4.php?userid='sindhurao385@gmail.com'&doctorid='shubhamgupto@gmail.com'&apptdatetime=$appdate&username='hi'&appid=$appid" -->
+											 <!-- "scheduleSend4.php?userid='sindhurao385@gmail.com'&doctorid='shubhamgupto@gmail.com'&apptdatetime=$appdate&username='hi'&appid=$appid" -->
 												<input type="checkbox" id="notif" name="notif" value="Enable notifications" onclick = "callPHPNotif()" />
 												<label for="notif">Enable notifications</label><br>
 											</div>
@@ -264,20 +276,7 @@ header("Location: patient.php");
 
 						</div>
 					</div>
-					<script>
-						function callPHPNotif(){
-							$.ajax({
-								type: "GET",
-								url: "scheduleSend4.php?userid='sindhurao385@gmail.com'&doctorid='shubhamgupto@gmail.com'&apptdatetime=$appdate&username='hi'&appid=$appid",
-								success: function(){
-									window.alert("Successfully subscribed to email notifications!");
-								},
-								error: function(){
-									window.alert("Email Notifications failed !");
-								}
-							});
-						}
-					</script>
+					
 					<!-- USER PROFILE ROW END-->
 					<!-- end -->
 					<script src="assets/js/jquery.js"></script>
