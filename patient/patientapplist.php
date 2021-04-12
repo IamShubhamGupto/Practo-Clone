@@ -2,16 +2,23 @@
 session_start();
 include_once '../assets/conn/dbconnect.php';
 $session=$_SESSION[ 'patientSession'];
-$res=mysqli_query($con, "SELECT a.*, b.*,c.* FROM patient a
+$res=mysqli_query($con, "SELECT a.*, b.*,c.*,d.* FROM patient a
 	JOIN appointment b
 		On a.icPatient = b.patientIc
 	JOIN doctorschedule c
 		On b.scheduleId=c.scheduleId
+	JOIN doctor d
+		On d.maindoctorId = c.maindoctorId
 	WHERE b.patientIc ='$session'");
 	if (!$res) {
 		die( "Error running $sql: " . mysqli_error());
 	}
 	$userRow=mysqli_fetch_array($res);
+	$useremail= $userRow['patientEmail'];
+	$docemail= $userRow['doctorEmail'];
+	$username= $userRow['patientFirstName'];
+	$apptid= $userRow['appId'];
+	$datetime=  $userRow['scheduleDate'] ." " .$userRow['startTime'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -128,7 +135,7 @@ echo "<td>" . $userRow['startTime'] . "</td>";
 echo "<td>" . $userRow['endTime'] . "</td>";
 echo "<td><a href='invoice.php?appid=".$userRow['appId']."' target='_blank'> <button type= 'button'style='background-color:lightblue'>"  . "Print" . "</button> </a> </td>";
 echo "<td><a href='patient.php?previd=" . $userRow['appId'] ."&prevscheduleid=". $userRow['scheduleId']. "&docid=" . $userRow['maindoctorId']."'>" . " <button type= 'button' style='background-color:lightblue'>"  . "update" . "</button>" . "</a></td>";
-echo "<td><a href='cancel.php?appId="  . $userRow['appId'] . "&scheduleId="  . $userRow['scheduleId'] . "' onclick = \"javascript: return confirm('Please confirm deletion');\">" . " <button type= 'button' name='cancel' style='background-color:lightblue'>"  . "Cancel " . "</button>" . "</a></td>";
+echo "<td><a href='cancel.php?appId="  . $userRow['appId'] . "&scheduleId="  . $userRow['scheduleId'] . "' onclick = 'callPHPNotif()'>" . " <button type= 'button' name='cancel' style='background-color:lightblue'>"  . "Cancel " . "</button>" . "</a></td>";
 }
 
 echo "</tr>";
@@ -136,6 +143,17 @@ echo "</tbody>";
 echo "</table>";
 
 ?>
+<script>
+function callPHPNotif(){
+ if(confirm("Are you sure you want to cancel appointment?")){
+	$.post("cancelSend.php",
+		{'usermail':'<?php echo $useremail ?>','doctormail':'<?php echo $docemail ?>','apptdatetime': '<?php echo $datetime?>','username':'<?php echo $username ?>','apptid': '<?php echo $apptid ?>'},
+	).done(function( data ) {
+		alert( "Data Loaded: " + data );
+	});}
+	// window.location.replace("scheduleSend5.php");
+}
+</script>
 	</div>
 </div>
 </div>
