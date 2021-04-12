@@ -2,8 +2,10 @@
 
 include_once 'assets/conn/dbconnect.php';
 $q = $_GET['q'];
-// echo $q;
-$res = mysqli_query($con,"SELECT * FROM doctorschedule WHERE scheduleDate='$q'");
+$docid = $_GET['docid'];
+
+ echo $docid;
+$res = mysqli_query($con,"SELECT * FROM doctorschedule WHERE scheduleDate='$q'AND maindoctorId = '$docid'");
 
 
 
@@ -18,17 +20,17 @@ die("Error running $sql: " . mysqli_error());
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+
     <!-- <link href="assets/css/bootstrap.min.css" rel="stylesheet"> -->
-    
+
 </head>
 <body>
-     <?php 
+     <?php
 
         if (mysqli_num_rows($res)==0) {
 
             echo "<div class='alert alert-danger' role='alert'>Doctor is not available at the moment. Please try again later.</div>";
-                
+
             } else {
              echo "   <table class='table table-hover'>";
         echo " <thead>";
@@ -42,7 +44,7 @@ die("Error running $sql: " . mysqli_error());
        echo "  </thead>";
        echo "  <tbody>";
 
-         while($row = mysqli_fetch_array($res)) { 
+         while($row = mysqli_fetch_array($res)) {
 
             ?>
 
@@ -54,7 +56,7 @@ die("Error running $sql: " . mysqli_error());
                 $avail="danger";
                 } else {
                 $avail="primary";
-                
+
             }
                 echo "<td>" . $row['scheduleDay'] . "</td>";
                 echo "<td>" . $row['scheduleDate'] . "</td>";

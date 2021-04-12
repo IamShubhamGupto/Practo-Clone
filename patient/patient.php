@@ -7,6 +7,7 @@ header("Location: ../index.php");
 }
 
 $usersession = $_SESSION['patientSession'];
+$docid =$_GET['docid'];
 
 $res=mysqli_query($con,"SELECT * FROM patient WHERE icPatient=".$usersession);
 
@@ -15,6 +16,8 @@ if ($res===false) {
 }
 
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
+
+
 
 if (isset($_GET['previd'])) {
 	$previd =$_GET['previd'];
@@ -68,13 +71,13 @@ else{
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="patient.php"><img alt="Brand" src="assets/img/logo.png" height="40px"></a>
+					<a class="navbar-brand" ><img alt="Brand" src="assets/img/logo.png" height="40px"></a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<ul class="nav navbar-nav">
-							<li><a href="patient.php">Home</a></li>
+							<li><a>Home</a></li>
 							<!-- <li><a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>" >Profile</a></li> -->
 							<li><a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>">Appointment</a></li>
 						</ul>
@@ -137,8 +140,10 @@ else{
 						<!-- script start -->
 						<script>
 						function showUser(str) {
-						var previd = "<?php echo $previd; ?>";
-						var prevscheduleid = "<?php echo $prevscheduleid; ?>";
+
+						var previd = <?PHP echo (!empty($previd) ? json_encode($previd) : '""'); ?>;
+						var prevscheduleid = <?PHP echo (!empty($prevscheduleid) ? json_encode($prevscheduleid) : '""'); ?>;
+						var docid = <?php echo $docid; ?>;
 
 						if (str == "") {
 						document.getElementById("txtHint").innerHTML = "No data to be shown";
@@ -156,7 +161,7 @@ else{
 						document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
 						}
 						};
-						xmlhttp.open("GET","getschedule.php?q="+str+"&previd="+previd+"&prevscheduleid="+prevscheduleid,true);
+						xmlhttp.open("GET","getschedule.php?q="+str+"&docid="+docid+"&previd="+previd+"&prevscheduleid="+prevscheduleid,true);
 						console.log(str);
 						xmlhttp.send();
 						}
