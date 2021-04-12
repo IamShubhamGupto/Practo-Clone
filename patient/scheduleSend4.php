@@ -30,12 +30,12 @@ function makeNotification(){
       $batch_id = $batch_id_response->batch_id;
   }
   echo $batch_id,"<br>";
-  //read form 
-  $userid=$_GET["usermail"]; 
-  $doctorid=$_GET["doctormail"];
-  $apptdatetime = $_GET["apptdatetime"];
-  $practo_user = $_GET["username"];
-  $apptid = $_GET["apptid"];
+  //read form
+  $userid="shubhamgupto@gmail.com";
+  $doctorid="sindhurao385@gmail.com";
+  $apptdatetime = new Date();
+  $practo_user = 'sindhu';
+  $apptid = 1;
   $practo_email = "bookingsforpracto@gmail.com";
   $practo_name = "Practo G6";
   $subject = "Upcoming scheduled appointment id:$apptid";
@@ -62,7 +62,7 @@ function makeNotification(){
       \"content\":[{\"type\":\"text/html\",\"value\":\"$mail_body\"}],
       \"send_at\":$send_at,
       \"batch_id\":\"$batch_id\"}";
-  echo $curloptpostfields;    
+  echo $curloptpostfields;
   curl_setopt_array($curl, array(
     CURLOPT_URL => "https://api.sendgrid.com/v3/mail/send",
     CURLOPT_RETURNTRANSFER => true,
@@ -90,9 +90,9 @@ function makeNotification(){
     echo "Sent success\n";
   }
 }
-if(isset($_GET["usermail"]) && isset($_GET["doctormail"])
-  && isset($_GET["apptdatetime"]) && isset($_GET["username"])
-  && isset($_GET["apptid"])){
+/*if(isset($_GET["usermail"]) && isset($_GET["doctormail"])
+  && isset($_GET["apptdatetime"]) && isset( $_GET["username"])
+  && isset( $_GET["apptid"])){*/
     makeNotification();
-}
+//}
 ?>

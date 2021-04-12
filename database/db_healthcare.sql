@@ -42,7 +42,7 @@ CREATE TABLE `appointment` (
 --
 
 INSERT INTO `appointment` (`appId`, `patientIc`, `scheduleId`, `appSymptom`, `appComment`, `status`) VALUES
-(86, 920517105553, 40, 'Pening Kepala', 'Bila doktor free?', 'done');
+(1, 01, 1, 'fever', '', 'done');
 
 -- --------------------------------------------------------
 
@@ -51,23 +51,28 @@ INSERT INTO `appointment` (`appId`, `patientIc`, `scheduleId`, `appSymptom`, `ap
 --
 
 CREATE TABLE `doctor` (
-  `icDoctor` bigint(12) NOT NULL,
   `password` varchar(20) NOT NULL,
   `doctorId` int(3) NOT NULL,
+  `maindoctorId` int(3) NOT NULL,
   `doctorFirstName` varchar(50) NOT NULL,
   `doctorLastName` varchar(50) NOT NULL,
   `doctorAddress` varchar(100) NOT NULL,
   `doctorPhone` varchar(15) NOT NULL,
   `doctorEmail` varchar(20) NOT NULL,
-  `doctorDOB` date NOT NULL
+  `symptom` varchar(20) NOT NULL,
+  `speciality` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `doctor`
 --
 
-INSERT INTO `doctor` (`icDoctor`, `password`, `doctorId`, `doctorFirstName`, `doctorLastName`, `doctorAddress`, `doctorPhone`, `doctorEmail`, `doctorDOB`) VALUES
-(123456789, '123', 123, 'Doctor', 'Sehgal', 'kuala lumpur', '0173567758', 'dsehgal@gmail.com', '1990-04-10');
+INSERT INTO `doctor` (`password`, `doctorId`,`maindoctorId`, `doctorFirstName`, `doctorLastName`, `doctorAddress`, `doctorPhone`, `doctorEmail`, `symptom`,`speciality`) VALUES
+( '123', '1', '123', 'shubham', 'gupta', 'bangalore', '0173567758', 'shubhamgupta@gmail.com', 'fever','general physician'),
+( '123', '2','123' ,'shubham', 'gupta', 'bangalore', '0173567758', 'shubhamgupta@gmail.com', 'fever','general physician'),
+( '123', '3', '123','shubham', 'gupta', 'bangalore', '0173567758', 'shubhamgupta@gmail.com', 'fever','general physician'),
+( '456', '4','456' ,'sinduja', 'mullangi', 'bangalore', '0173567759', 'shubhamgupta@gmail.com', 'cold','general physician'),
+( '456', '5','456' ,'sinduja', 'mullangi', 'bangalore', '0173567759', 'shubhamgupta@gmail.com', 'cold','general physician');
 
 -- --------------------------------------------------------
 
@@ -76,6 +81,7 @@ INSERT INTO `doctor` (`icDoctor`, `password`, `doctorId`, `doctorFirstName`, `do
 --
 
 CREATE TABLE `doctorschedule` (
+  `maindoctorId` int(11) NOT NULL,
   `scheduleId` int(11) NOT NULL,
   `scheduleDate` date NOT NULL,
   `scheduleDay` varchar(15) NOT NULL,
@@ -88,12 +94,12 @@ CREATE TABLE `doctorschedule` (
 -- Dumping data for table `doctorschedule`
 --
 
-INSERT INTO `doctorschedule` (`scheduleId`, `scheduleDate`, `scheduleDay`, `startTime`, `endTime`, `bookAvail`) VALUES
-(40, '2015-12-13', 'Sunday', '09:00:00', '10:00:00', 'notavail'),
-(41, '2015-12-13', 'Sunday', '10:00:00', '11:00:00', 'available'),
-(42, '2015-12-13', 'Sunday', '11:00:00', '12:00:00', 'available'),
-(43, '2015-12-14', 'Monday', '11:00:00', '12:00:00', 'available'),
-(44, '2015-12-13', 'Sunday', '01:00:00', '02:00:00', 'available');
+INSERT INTO `doctorschedule` (`maindoctorId`,`scheduleId`, `scheduleDate`, `scheduleDay`, `startTime`, `endTime`, `bookAvail`) VALUES
+(123,1, '2021-04-12', 'Monday', '09:00:00', '10:00:00', 'notavail'),
+(123,2, '2021-04-12', 'Monday', '10:00:00', '11:00:00', 'available'),
+(123,3, '2021-04-12', 'Monday', '11:00:00', '12:00:00', 'available'),
+(456,4, '2021-04-12', 'Monday', '11:00:00', '12:00:00', 'available'),
+(456,5, '2021-04-12', 'Monday', '01:00:00', '02:00:00', 'available');
 
 -- --------------------------------------------------------
 
@@ -119,7 +125,7 @@ CREATE TABLE `patient` (
 --
 
 INSERT INTO `patient` (`icPatient`, `password`, `patientFirstName`, `patientLastName`, `patientMaritialStatus`, `patientDOB`, `patientGender`, `patientAddress`, `patientPhone`, `patientEmail`) VALUES
-(920517105553, '123', 'Mohd', 'Mazlan', 'single', '1992-05-17', 'male', 'NO 153 BLOK MURNI\r\nKOLEJ CANSELOR UNIVERSITI PUTRA MALAYSIA', '173567758', 'lan.psis@gmail.com');
+('01', '01', 'sindhu', 'rao', 'single', '', 'female', '', '9999900000', 'sindhurao385@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -138,7 +144,7 @@ ALTER TABLE `appointment`
 -- Indexes for table `doctor`
 --
 ALTER TABLE `doctor`
-  ADD PRIMARY KEY (`icDoctor`);
+  ADD PRIMARY KEY (`doctorId`);
 
 --
 -- Indexes for table `doctorschedule`
@@ -171,6 +177,10 @@ ALTER TABLE `doctorschedule`
 --
 -- Constraints for dumped tables
 --
+/*
+ALTER TABLE `doctorschedule`
+  ADD  FOREIGN KEY (`maindoctorId`) REFERENCES `doctor` (`doctorId`);*/
+
 
 --
 -- Constraints for table `appointment`

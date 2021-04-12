@@ -47,8 +47,8 @@ $res=mysqli_query($con, "SELECT a.*, b.*,c.* FROM patient a
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<ul class="nav navbar-nav">
-							<li><a href="patient.php">Home</a></li>
-							<!-- <li><a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>" >Profile</a></li> -->
+							<li><a href="patient.php?docid=<?php echo $userRow['maindoctorId']; ?>">Home</a></li>
+
 							<li><a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>">Appointment</a></li>
 						</ul>
 					</ul>
@@ -127,7 +127,7 @@ echo "<td>" . $userRow['scheduleDate'] . "</td>";
 echo "<td>" . $userRow['startTime'] . "</td>";
 echo "<td>" . $userRow['endTime'] . "</td>";
 echo "<td><a href='invoice.php?appid=".$userRow['appId']."' target='_blank'> <button type= 'button'style='background-color:lightblue'>"  . "Print" . "</button> </a> </td>";
-echo "<td><a href='patient.php?previd=" . $userRow['appId'] ."&prevscheduleid". $userRow['scheduleId']. "'>" . " <button type= 'button' style='background-color:lightblue'>"  . "update" . "</button>" . "</a></td>";
+echo "<td><a href='patient.php?previd=" . $userRow['appId'] ."&prevscheduleid=". $userRow['scheduleId']. "&docid=" . $userRow['maindoctorId']."'>" . " <button type= 'button' style='background-color:lightblue'>"  . "update" . "</button>" . "</a></td>";
 echo "<td><a href='cancel.php?appId="  . $userRow['appId'] . "&scheduleId="  . $userRow['scheduleId'] . "' onclick = \"javascript: return confirm('Please confirm deletion');\">" . " <button type= 'button' name='cancel' style='background-color:lightblue'>"  . "Cancel " . "</button>" . "</a></td>";
 }
 

@@ -11,9 +11,14 @@ if (isset($_GET['scheduleDate']) && isset($_GET['appid'])) {
 if (isset($_GET['previd'])) {
 	$previd =$_GET['previd'];
 }
+if (isset($_GET['prevscheduleid'])) {
+	$prevscheduleid =$_GET['prevscheduleid'];
+}
+echo $previd;
+echo $prevscheduleid;
 
-if (isset($_GET['$prevscheduleid'])) {
-	$prevscheduleid =$_GET['$prevscheduleid'];
+if (isset($_GET['$docid'])) {
+	$docid =$_GET['$docid'];
 }
 // on b.icPatient = a.icPatient
 $res = mysqli_query($con,"SELECT a.*, b.* FROM doctorschedule a INNER JOIN patient b
@@ -74,11 +79,6 @@ $scheduleid = mysqli_real_escape_string($con,$appid);
 $symptom = mysqli_real_escape_string($con,$_POST['symptom']);
 $comment = mysqli_real_escape_string($con,$_POST['comment']);
 
-$sql2 = "UPDATE doctorschedule SET bookAvail = 'available' WHERE scheduleId = $prevscheduleid" ;
-$scheduleres2=mysqli_query($con,$sql2);
-if ($scheduleres2) {
-	$btn= "enable";
-}
 
 $query2 = "INSERT INTO appointment (  patientIc , scheduleId , appSymptom , appComment  )
 VALUES ( '$patientIc', '$scheduleid', '$symptom', '$comment') ";
@@ -90,12 +90,14 @@ if ($scheduleres) {
 	$btn= "disable";
 }
 
-
-
 $sql1 = "DELETE FROM appointment WHERE appid='$previd'";
 $delete = mysqli_query($con,$sql1);
 
-
+$sql4 = "UPDATE doctorschedule SET bookAvail = 'available' WHERE scheduleId = $prevscheduleid" ;
+$scheduleres4=mysqli_query($con,$sql4);
+if ($scheduleres4) {
+	$btn= "enable";
+}
 
 $result2 = mysqli_query($con,$query2);
 // echo $result;
@@ -118,7 +120,7 @@ alert('Appointment booking fail. Please try again.');
 <?php
 header("Location: patient.php");
 }
-//dapat dari generator end
+
 }
 ?>
 
@@ -273,7 +275,7 @@ header("Location: patient.php");
 								error: function(){
 									window.alert("Email Notifications failed !");
 								}
-							});	
+							});
 						}
 					</script>
 					<!-- USER PROFILE ROW END-->
