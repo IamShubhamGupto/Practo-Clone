@@ -4,10 +4,13 @@ include_once '../assets/conn/dbconnect.php';
 $session= $_SESSION['patientSession'];
 // $appid=null;
 // $appdate=null;
+
 if (isset($_GET['scheduleDate']) && isset($_GET['appid'])) {
 	$appdate =$_GET['scheduleDate'];
 	$appid = $_GET['appid'];
 }
+echo $appdate;
+
 if (isset($_GET['previd'])) {
 	$previd =$_GET['previd'];
 }
@@ -21,12 +24,13 @@ if (isset($_GET['$docid'])) {
 	$docid =$_GET['$docid'];
 }
 // on b.icPatient = a.icPatient
-$res = mysqli_query($con,"SELECT a.*, b.* FROM doctorschedule a INNER JOIN patient b
-WHERE a.scheduleDate='$appdate' AND scheduleId=$appid AND b.icPatient=$session");
+$res = mysqli_query($con,"SELECT a.*, b.*,c.* FROM doctorschedule a INNER JOIN patient b INNER JOIN doctor c
+WHERE a.scheduleDate='$appdate' AND scheduleId=$appid AND b.icPatient=$session AND c.maindoctorId = a.maindoctorId");
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
-
-
+$useremail= $userRow['patientEmail'];
+$docemail= $userRow['doctorEmail'];
+$username= $userRow['patientFirstName'];
 //INSERT
 if (isset($_POST['appointment'])) {
 $patientIc = mysqli_real_escape_string($con,$userRow['icPatient']);
@@ -249,11 +253,12 @@ $sendDate = $date->format('d/m/Y H:i');
 											</div>
 											<script>
 												function callPHPNotif(){
+
 													$.post("scheduleSend5.php",
-														{'usermail':'sindhurao385@gmail.com','doctormail':'shubhamgupto@gmail.com','apptdatetime': '<?php echo $sendDate ?>','username':'hi','apptid': '123'},
+														{'usermail':'<?php echo $useremail ?>','doctormail':'<?php echo $docemail ?>','apptdatetime': '<?php echo $appdate ." " .$userRow['startTime'];?>','username':'<?php echo $username ?>','apptid': '<?php echo $appid ?>'},
 													).done(function( data ) {
 														alert( "Data Loaded: " + data );
-													});	
+													});
 													// window.location.replace("scheduleSend5.php");
 												}
 											</script>
@@ -276,7 +281,7 @@ $sendDate = $date->format('d/m/Y H:i');
 
 						</div>
 					</div>
-					
+
 					<!-- USER PROFILE ROW END-->
 					<!-- end -->
 					<script src="assets/js/jquery.js"></script>
