@@ -9,7 +9,7 @@ if (isset($_GET['scheduleDate']) && isset($_GET['appid'])) {
 	$appdate =$_GET['scheduleDate'];
 	$appid = $_GET['appid'];
 }
-echo $appdate;
+
 
 if (isset($_GET['previd'])) {
 	$previd =$_GET['previd'];
@@ -17,20 +17,21 @@ if (isset($_GET['previd'])) {
 if (isset($_GET['prevscheduleid'])) {
 	$prevscheduleid =$_GET['prevscheduleid'];
 }
-echo $previd;
-echo $prevscheduleid;
+
 
 if (isset($_GET['$docid'])) {
 	$docid =$_GET['$docid'];
 }
 // on b.icPatient = a.icPatient
-$res = mysqli_query($con,"SELECT a.*, b.*,c.* FROM doctorschedule a INNER JOIN patient b INNER JOIN doctor c
-WHERE a.scheduleDate='$appdate' AND scheduleId=$appid AND b.icPatient=$session AND c.maindoctorId = a.maindoctorId");
+$res = mysqli_query($con,"SELECT a.*, b.*,c.*,d.* FROM doctorschedule a INNER JOIN patient b INNER JOIN doctor c INNER JOIN appointment d
+WHERE a.scheduleDate='$appdate' AND a.scheduleId=$appid AND b.icPatient=$session AND c.maindoctorId = a.maindoctorId AND d.scheduleId = $appid;");
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
 $useremail= $userRow['patientEmail'];
 $docemail= $userRow['doctorEmail'];
 $username= $userRow['patientFirstName'];
+$apptid = $userRow['appId'];
+
 //INSERT
 if (isset($_POST['appointment'])) {
 $patientIc = mysqli_real_escape_string($con,$userRow['icPatient']);
@@ -255,12 +256,13 @@ $sendDate = $date->format('d/m/Y H:i');
 												function callPHPNotif(){
 
 													$.post("scheduleSend5.php",
-														{'usermail':'<?php echo $useremail ?>','doctormail':'<?php echo $docemail ?>','apptdatetime': '<?php echo $appdate ." " .$userRow['startTime'];?>','username':'<?php echo $username ?>','apptid': '<?php echo $appid ?>'},
+														{'usermail':'<?php echo $useremail ?>','doctormail':'<?php echo $docemail ?>','apptdatetime': '<?php echo $appdate ." " .$userRow['startTime'];?>','username':'<?php echo $username ?>','apptid': '<?php echo $apptid ?>'},
 													).done(function( data ) {
 														alert( "Data Loaded: " + data );
 													});
 													// window.location.replace("scheduleSend5.php");
 												}
+
 											</script>
 											<div>
 											 <!-- "scheduleSend4.php?userid='sindhurao385@gmail.com'&doctorid='shubhamgupto@gmail.com'&apptdatetime=$appdate&username='hi'&appid=$appid" -->
