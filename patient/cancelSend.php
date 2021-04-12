@@ -30,7 +30,7 @@
       $batch_id = $batch_id_response->batch_id;
   }
   // echo $batch_id,"<br>";
-  $userid=$_POST["usermail"]; 
+  $userid=$_POST["usermail"];
     $doctorid=$_POST["doctormail"];
     $apptdatetime = $_POST["apptdatetime"];
     $practo_user = $_POST["username"];
@@ -56,7 +56,7 @@
 
   // echo "appdatetime recieved == $apptdatetime ", gettype($apptdatetime),"   length   ",strlen($apptdatetime);
   $mail_body = "<p>Hello $practo_user,</p><p>This is a confirmation email for your upcoming appointment at $apptdatetime has been cancelled. If you think there has been a mistake, please do reply to this email.</p><p>Regards.</p><p>Practo Team.</p>";
-  $dateTime = DateTime::createFromFormat('d/m/Y H:i', $apptdatetime);
+  $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $apptdatetime);
 
   // echo "dateTime === $dateTime    ","   datetime timestamp = ",$dateTime->getTimestamp(),"   ";
   $send_at = time();
@@ -76,7 +76,7 @@
       \"content\":[{\"type\":\"text/html\",\"value\":\"$mail_body\"}],
       \"send_at\":$send_at,
       \"batch_id\":\"$batch_id\"}";
-  echo $curloptpostfields;    
+  echo $curloptpostfields;
   curl_setopt_array($curl, array(
     CURLOPT_URL => "https://api.sendgrid.com/v3/mail/send",
     CURLOPT_RETURNTRANSFER => true,
