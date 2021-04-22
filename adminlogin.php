@@ -5,6 +5,8 @@ session_start();
 if (isset($_SESSION['doctorSession']) != "") {
 header("Location: doctor/doctordashboard.php");
 }
+
+$docid=$_GET['docid'];
 if (isset($_POST['login']))
 {
 $doctorId = mysqli_real_escape_string($con,$_POST['doctorId']);
@@ -22,7 +24,7 @@ $_SESSION['doctorSession'] = $row['doctorId'];
 alert('Login Success');
 </script>
 <?php
-header("Location: doctor/doctordashboard.php");
+header("Location: doctor/doctordashboard.php?docid=".$docid);
 } else {
 ?>
 <script type="text/javascript">
@@ -64,7 +66,7 @@ header("Location: doctor/doctordashboard.php");
         <script src="assets/js/jquery.js"></script>
 
         <!-- js start -->
-        
+
         <!-- js end -->
     </body>
 </html>

@@ -9,6 +9,10 @@ if (isset($_GET['scheduleId'])) {
 	$scheduleid =$_GET['scheduleId'];
 }
 
+if (isset($_GET['docid'])) {
+	$docid =$_GET['docid'];
+}
+
 
 
 $sql1 = "DELETE FROM appointment WHERE appid='$appid'";
@@ -26,7 +30,7 @@ if ($scheduleres) {
 <body>
 <script>
 	alert('Appointment cancelled successfully.');
-	window.location.href = "patientapplist.php";
+	window.location.href = "patientapplist.php?docid= <?php echo $docid ?>";
 </script>
 </body>
 </html>

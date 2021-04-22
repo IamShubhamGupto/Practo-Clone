@@ -4,7 +4,6 @@ include_once 'assets/conn/dbconnect.php';
 $q = $_GET['q'];
 $docid = $_GET['docid'];
 
- echo $docid;
 $res = mysqli_query($con,"SELECT * FROM doctorschedule WHERE scheduleDate='$q'AND maindoctorId = '$docid'");
 
 
@@ -12,8 +11,6 @@ $res = mysqli_query($con,"SELECT * FROM doctorschedule WHERE scheduleDate='$q'AN
 if (!$res) {
 die("Error running $sql: " . mysqli_error());
 }
-
-
 
 
 ?>

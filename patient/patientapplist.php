@@ -2,6 +2,10 @@
 session_start();
 include_once '../assets/conn/dbconnect.php';
 $session=$_SESSION[ 'patientSession'];
+if (isset($_GET['docid']) ){
+	$docid = $_GET['docid'];
+}
+#echo $docid;
 $res=mysqli_query($con, "SELECT a.*, b.*,c.*,d.* FROM patient a
 	JOIN appointment b
 		On a.icPatient = b.patientIc
@@ -13,6 +17,7 @@ $res=mysqli_query($con, "SELECT a.*, b.*,c.*,d.* FROM patient a
 	if (!$res) {
 		die( "Error running $sql: " . mysqli_error());
 	}
+
 	$userRow=mysqli_fetch_array($res);
 	$useremail= $userRow['patientEmail'];
 	$docemail= $userRow['doctorEmail'];
@@ -54,9 +59,9 @@ $res=mysqli_query($con, "SELECT a.*, b.*,c.*,d.* FROM patient a
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<ul class="nav navbar-nav">
-							<li><a href="patient.php?docid=<?php echo $userRow['maindoctorId']; ?>">Home</a></li>
+							<li><a href="patient.php?docid=<?php echo $userRow['maindoctorId']; ?>&docid=<?php echo $docid ?>">Home</a></li>
 
-							<li><a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>">Appointment</a></li>
+							<li><a href="patientapplist.php?patientId=<?php echo $userRow['icPatient'];?> &docid= <?php echo $docid ?>">Appointment</a></li>
 						</ul>
 					</ul>
 
@@ -65,10 +70,10 @@ $res=mysqli_query($con, "SELECT a.*, b.*,c.*,d.* FROM patient a
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?><b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>"><i class="fa fa-fw fa-user"></i> Profile</a>
+									<a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>&docid= <?php echo $docid?>"><i class="fa fa-fw fa-user"></i> Profile</a>
 								</li>
 								<li>
-									<a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>"><i class="glyphicon glyphicon-file"></i> Appointment</a>
+									<a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?> &docid= <?php echo $docid?>"><i class="glyphicon glyphicon-file"></i> Appointment</a>
 								</li>
 								<li class="divider"></li>
 								<li>
@@ -105,6 +110,7 @@ echo "<th>scheduleDate </th>";
 echo "<th>startTime </th>";
 echo "<th>endTime </th>";
 echo "<th>Print </th>";
+echo "<th>Chat </th>";
 echo "<th>Update appointment</th>";
 echo "<th>Cancel appointment</th>";
 echo "</tr>";
@@ -134,8 +140,9 @@ echo "<td>" . $userRow['scheduleDate'] . "</td>";
 echo "<td>" . $userRow['startTime'] . "</td>";
 echo "<td>" . $userRow['endTime'] . "</td>";
 echo "<td><a href='invoice.php?appid=".$userRow['appId']."' target='_blank'> <button type= 'button'style='background-color:lightblue'>"  . "Print" . "</button> </a> </td>";
+echo "<td><a href='chat.php?appid=".$userRow['appId']."&docid=".$userRow['maindoctorId']."&patid=".$userRow['patientIc']."' target='_blank'> <button type= 'button'style='background-color:lightblue'>"  . "Chat" . "</button> </a> </td>";
 echo "<td><a href='patient.php?previd=" . $userRow['appId'] ."&prevscheduleid=". $userRow['scheduleId']. "&docid=" . $userRow['maindoctorId']."'>" . " <button type= 'button' style='background-color:lightblue'>"  . "update" . "</button>" . "</a></td>";
-echo "<td><a href='cancel.php?appId="  . $userRow['appId'] . "&scheduleId="  . $userRow['scheduleId'] . "' onclick = 'callPHPNotif()'>" . " <button type= 'button' name='cancel' style='background-color:lightblue'>"  . "Cancel " . "</button>" . "</a></td>";
+echo "<td><a href='cancel.php?appId="  . $userRow['appId'] . "&scheduleId="  . $userRow['scheduleId'] . "&docid=". $docid ." ' onclick = 'callPHPNotif()'>" . " <button type= 'button' name='cancel' style='background-color:lightblue'>"  . "Cancel " . "</button>" . "</a></td>";
 }
 
 echo "</tr>";

@@ -8,6 +8,7 @@ header("Location: ../index.php");
 
 $usersession = $_SESSION['patientSession'];
 $docid =$_GET['docid'];
+#echo $docid;
 
 $res=mysqli_query($con,"SELECT * FROM patient WHERE icPatient=".$usersession);
 
@@ -79,7 +80,7 @@ else{
 						<ul class="nav navbar-nav">
 							<li><a>Home</a></li>
 							<!-- <li><a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>" >Profile</a></li> -->
-							<li><a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>">Appointment</a></li>
+							<li><a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?> &docid= <?php echo $docid ?>">Appointment</a></li>
 						</ul>
 					</ul>
 
@@ -88,10 +89,10 @@ else{
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?><b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>"><i class="fa fa-fw fa-user"></i> Profile</a>
+									<a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>&docid= <?php echo $docid?>"><i class="fa fa-fw fa-user"></i> Profile</a>
 								</li>
 								<li>
-									<a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>"><i class="glyphicon glyphicon-file"></i> Appointment</a>
+									<a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?> &docid= <?php echo $docid?>"><i class="glyphicon glyphicon-file"></i> Appointment</a>
 								</li>
 								<li class="divider"></li>
 								<li>
@@ -188,72 +189,7 @@ else{
 		</section>
 		<!-- first section end -->
 		<!-- forth sections start -->
-		<section id="content-1-9" class="content-1-9 content-block">
-			<div class="container">
-				<div class="underlined-title">
-					<h1>Get in Touch</h1>
-					<hr>
-					<h2>Feel free to drop us a line to contact us</h2>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-sm-12 col-xs-12 pad25">
-						<div class="col-xs-2">
-							<span class="fa fa-pencil"></span>
-						</div>
-						<div class="col-xs-10">
-							<h4>Branding</h4>
-							<p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-12 col-xs-12 pad25">
-						<div class="col-xs-2">
-							<span class="fa fa-code"></span>
-						</div>
-						<div class="col-xs-10">
-							<h4>Web Design</h4>
-							<p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-12 col-xs-12 pad25">
-						<div class="col-xs-2">
-							<span class="fa fa-comments-o"></span>
-						</div>
-						<div class="col-xs-10">
-							<h4>Social Marketing</h4>
-							<p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-12 col-xs-12 pad25">
-						<div class="col-xs-2">
-							<span class="fa fa-search"></span>
-						</div>
-						<div class="col-xs-10">
-							<h4>SEO</h4>
-							<p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-12 col-xs-12 pad25">
-						<div class="col-xs-2">
-							<span class="fa fa-mobile"></span>
-						</div>
-						<div class="col-xs-10">
-							<h4>Mobile Apps</h4>
-							<p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
-						</div>
-					</div>
-					<div class="col-md-4 col-sm-12 col-xs-12 pad25">
-						<div class="col-xs-2">
-							<span class="fa fa-bookmark"></span>
-						</div>
-						<div class="col-xs-10">
-							<h4>Corporate Literture</h4>
-							<p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
-						</div>
-					</div>
-				</div>
-				<!-- /.row -->
-			</div>
-		</section>
+
 		<!-- forth section end -->
 
 		<!-- footer start -->

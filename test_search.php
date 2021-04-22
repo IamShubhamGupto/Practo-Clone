@@ -22,7 +22,7 @@
     $sql_list = $sql_list.")";
     $sql = "SELECT DISTINCT doctorFirstName, doctorLastName,maindoctorId,speciality FROM doctor WHERE symptom IN $sql_list";
 
-  
+
     $result = mysqli_query($conn,$sql);
     if (mysqli_num_rows($result)>0)
     {
@@ -33,8 +33,9 @@
             echo '<div class="media border p-3" style="background-color: ghostwhite;">';
             echo '<div class="media-body">';
             echo '<h4 class="media-heading">';
-            echo '<a href="home.php?maindoctorId='. $row['maindoctorId'].'">';
-            echo $row["doctorFirstName"];
+            echo '<a href="home.php?maindoctorId='. $row['maindoctorId'].' ">';
+            echo 'Dr ';
+            echo $row["doctorFirstName"].' ';
             echo $row["doctorLastName"];
             echo " | ";
             echo $row["speciality"];

@@ -6,8 +6,6 @@ if (isset($_GET['docid'])) {
 	$docid =$_GET['docid'];
 }
 
-echo $docid;
-
 $res = mysqli_query($con,"SELECT * FROM doctorschedule WHERE scheduleDate='$q'AND maindoctorId = '$docid'");
 if (isset($_GET['previd'])) {
 	$previd =$_GET['previd'];
@@ -16,7 +14,7 @@ if (isset($_GET['prevscheduleid'])) {
 	$prevscheduleid =$_GET['prevscheduleid'];
 
 }
-echo $prevscheduleid;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +30,7 @@ echo $prevscheduleid;
         echo "   <table class='table table-hover'>";
             echo " <thead>";
                 echo " <tr>";
-                    echo " <th>App Id</th>";
+                    echo " <th>Schedule Id</th>";
 										echo " <th>Doctor id</th>";
                     echo " <th>Day</th>";
                     echo " <th>Date</th>";
@@ -72,7 +70,7 @@ echo $prevscheduleid;
                     echo "<td>" . $row['startTime'] . "</td>";
                     echo "<td>" . $row['endTime'] . "</td>";
                     echo "<td> <span class='label label-".$avail."'>". $row['bookAvail'] ."</span></td>";
-                    echo "<td><a href='appointment.php?&appid=" . $row['scheduleId'] . "&scheduleDate=".$q."&previd= ". $previd . "&prevscheduleid=". $prevscheduleid ."&docid=" . $docid ."' class='btn btn-".$btnclick." btn-xs' role='button' ".$btnstate.">Book Now</a></td>";
+                    echo "<td><a href='appointment.php?&appid=" . $row['scheduleId'] . "&scheduleDate=".$q. " &docid=" . $docid ."&previd= ". $previd . "&prevscheduleid=". $prevscheduleid ."' class='btn btn-".$btnclick." btn-xs' role='button' ".$btnstate.">Book Now</a></td>";
                     // echo "<td><a href='appointment.php?&appid=" . $row['scheduleId'] . "&scheduleDate=".$q."'>Book</a></td>";
                     // <td><button type='button' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#exampleModal'>Book Now</button></td>";
                     //triggered when modal is about to be shown

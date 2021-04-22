@@ -315,9 +315,9 @@ alert('User already registered. Please try again');
         <section id="promo-1" class="content-block promo-1 min-height-600px bg-offwhite">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-5">
-                        <h2>Make appointment today!</h2>
-                        <p>This is Doctor's Schedule. Please <span class="label label-danger">login</span> to make an appointment. </p>
+                    <div class="col-md-5 bg-light">
+                        <h2>Make an appointment today!</h2>
+                        <p>This is the Doctor's Schedule. Please <span class="label label-danger">login</span> to make an appointment. </p>
 
                         <!-- date textbox -->
 
@@ -387,6 +387,7 @@ alert('User already registered. Please try again');
 
         <!-- third section end -->
         <!-- forth sections start -->
+        <!--
         <section id="content-1-9" class="content-1-9 content-block">
             <div class="container">
                 <div class="underlined-title">
@@ -449,7 +450,7 @@ alert('User already registered. Please try again');
                             <p>Retro chillwave YOLO four loko photo booth. Brooklyn kale chips, seitan hella 3 wolf moon slow-carb paleo.</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- /.row -->
             </div>
             <!-- /.container -->
@@ -458,8 +459,7 @@ alert('User already registered. Please try again');
         <!-- footer start -->
         <div class="copyright-bar bg-black">
             <div class="container">
-                <p class="pull-left small">© Projectworlds <a href ="https://projectworlds.in/">Get More Projects </a></p>
-                <p class="pull-right small"><a href="adminlogin.php">admin</a></p>
+                <p class="pull-right small"><a href="adminlogin.php?docid=<?php echo $docid ?>">admin</a></p>
             </div>
         </div>
         <!-- footer end -->

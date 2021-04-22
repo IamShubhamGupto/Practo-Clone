@@ -6,6 +6,10 @@ if(!isset($_SESSION['patientSession']))
 {
 header("Location: ../index.php");
 }
+if (isset($_GET['docid'])) {
+	$docid =$_GET['docid'];
+}
+#echo $docid;
 $res=mysqli_query($con,"SELECT * FROM patient WHERE icPatient=".$_SESSION['patientSession']);
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 ?>
@@ -75,7 +79,7 @@ $widowed = "checked";
 		<!-- <link href="assets/css/material.css" rel="stylesheet"> -->
 	</head>
 	<body>
-		
+
 		<!-- navigation -->
 		<nav class="navbar navbar-default " role="navigation">
 			<div class="container-fluid">
@@ -87,27 +91,27 @@ $widowed = "checked";
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="patient.php"><img alt="Brand" src="assets/img/logo.png" height="40px"></a>
+					<a class="navbar-brand" href="patient.php?docid= <?php $docid?>"><img alt="Brand" src="assets/img/logo.png" height="40px"></a>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<ul class="nav navbar-nav">
-							<li><a href="patient.php">Home</a></li>
+							<li><a href="patient.php?docid=<?php echo $docid?>">Home</a></li>
 							<!-- <li><a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>" >Profile</a></li> -->
-							<li><a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>">Appointment</a></li>
+							<li><a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>&docid=<?php echo $docid ?>">Appointment</a></li>
 						</ul>
 					</ul>
-					
+
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?><b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>"><i class="fa fa-fw fa-user"></i> Profile</a>
+									<a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>&docid= <?php echo $docid?>"><i class="fa fa-fw fa-user"></i> Profile</a>
 								</li>
 								<li>
-									<a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>"><i class="glyphicon glyphicon-file"></i> Appointment</a>
+									<a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>&docid= <?php echo $docid?>"><i class="glyphicon glyphicon-file"></i> Appointment</a>
 								</li>
 								<li class="divider"></li>
 								<li>
@@ -120,7 +124,7 @@ $widowed = "checked";
 			</div>
 		</nav>
 		<!-- navigation -->
-		
+
 		<div class="container">
 			<section style="padding-bottom: 50px; padding-top: 50px;">
 				<div class="row">
@@ -128,34 +132,31 @@ $widowed = "checked";
 					<!-- USER PROFILE ROW STARTS-->
 					<div class="row">
 						<div class="col-md-3 col-sm-3">
-							
+
 							<div class="user-wrapper">
-								<img src="assets/img/1.jpg" class="img-responsive" />
+
 								<div class="description">
 									<h4><?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?></h4>
-									<h5> <strong> Website Designer </strong></h5>
-									<p>
-										Pellentesque elementum dapibus convallis.
-									</p>
+
 									<hr />
 									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Update Profile</button>
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="col-md-9 col-sm-9  user-wrapper">
 							<div class="description">
 								<h3> <?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?> </h3>
 								<hr />
-								
+
 								<div class="panel panel-default">
 									<div class="panel-body">
-										
-										
+
+
 										<table class="table table-user-information" align="center">
 											<tbody>
-												
-												
+
+
 												<tr>
 													<td>PatientMaritialStatus</td>
 													<td><?php echo $userRow['patientMaritialStatus']; ?></td>
@@ -187,17 +188,17 @@ $widowed = "checked";
 										</table>
 									</div>
 								</div>
-								
+
 							</div>
-							
+
 						</div>
 					</div>
 					<!-- USER PROFILE ROW END-->
 					<!-- end -->
 					<div class="col-md-4">
-						
+
 						<!-- Large modal -->
-						
+
 						<!-- Modal -->
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 							<div class="modal-dialog" role="document">
@@ -223,7 +224,7 @@ $widowed = "checked";
 														<td>Last Name</td>
 														<td><input type="text" class="form-control" name="patientLastName" value="<?php echo $userRow['patientLastName']; ?>"  /></td>
 													</tr>
-													
+
 													<!-- radio button -->
 													<tr>
 														<td>Maritial Status:</td>
@@ -251,7 +252,7 @@ $widowed = "checked";
 														<!-- <td><input type="text" class="form-control" name="patientDOB" value="<?php echo $userRow['patientDOB']; ?>"  /></td> -->
 														<td>
 															<div class="form-group ">
-																
+
 																<div class="input-group">
 																	<div class="input-group-addon">
 																		<i class="fa fa-calendar">
@@ -261,7 +262,7 @@ $widowed = "checked";
 																</div>
 															</div>
 														</td>
-														
+
 													</tr>
 													<!-- radio button -->
 													<tr>
@@ -276,7 +277,7 @@ $widowed = "checked";
 														</td>
 													</tr>
 													<!-- radio button end -->
-													
+
 													<tr>
 														<td>Phone number</td>
 														<td><input type="text" class="form-control" name="patientPhone" value="<?php echo $userRow['patientPhone']; ?>"  /></td>
@@ -294,21 +295,21 @@ $widowed = "checked";
 															<input type="submit" name="submit" class="btn btn-info" value="Update Info"></td>
 														</tr>
 													</tbody>
-													
+
 												</table>
-												
-												
-												
+
+
+
 											</form>
 											<!-- form end -->
 										</div>
-										
+
 									</div>
 								</div>
 							</div>
 							<br /><br/>
 						</div>
-						
+
 					</div>
 					<!-- ROW END -->
 				</section>
@@ -317,7 +318,7 @@ $widowed = "checked";
 			<!-- CONATINER END -->
 			<script src="assets/js/jquery.js"></script>
 			<script src="assets/js/bootstrap.min.js"></script>
-			
+
 			<script type="text/javascript">
 														$(function () {
 														$('#patientDOB').datetimepicker();

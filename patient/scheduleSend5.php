@@ -23,7 +23,7 @@
   curl_close($curl);
 
   if ($err) {
-    echo "cURL Error #:" . $err;
+    echo "failed to enable notifications" ;
   } else {
       // echo $response;
       $batch_id_response =  json_decode($response);
@@ -76,7 +76,7 @@
       \"content\":[{\"type\":\"text/html\",\"value\":\"$mail_body\"}],
       \"send_at\":$send_at,
       \"batch_id\":\"$batch_id\"}";
-  echo $curloptpostfields;
+
   curl_setopt_array($curl, array(
     CURLOPT_URL => "https://api.sendgrid.com/v3/mail/send",
     CURLOPT_RETURNTRANSFER => true,
@@ -98,10 +98,10 @@
   curl_close($curl);
 
   if ($err) {
-    echo "cURL Error #:" . $err;
+    echo "Failed to enable notifications";
   } else {
     // echo $response;
-    echo "Sent success\n";
+    echo "notifications enabled\n";
   }
 
 ?>

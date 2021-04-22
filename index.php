@@ -24,6 +24,7 @@
     </head>
     <body class="normal">
 
+
         <nav class="navbar navbar-expand-md" style="background-color: black;">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
@@ -37,21 +38,20 @@
                 </li>
             </ul>
             <ul class="navbar-nav">
-                <li class="nav-item"><button id="darkmodebutton" class="nav-link">Dark Mode</button></li>
-                <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Register</a></li>
+                <li class="nav-item"><button id="darkmodebutton" class="nav-link">Light Mode</button></li>
+
             </ul>
         </nav>
 
         <div class="container-fluid">
-            <div class="jumbotron jumbotron-fluid" style="background-color:orange;">
+            <div class="jumbotron jumbotron-fluid" style="background-color:LightSkyBlue;">
                 <h1 class="text-center">Enter symptoms...</h1><br>
                 <div class="container">
                         <div class="active-cyan-4 mb-4">
                                 <input id="searchbox" class="form-control" type="text" placeholder="Search" aria-label="Search">
                         </div>
                 </div>
-                <div id="suggestions" class="jumbotron jumbotron-fluid text-center" style="background-color:orange;">
+                <div id="suggestions" class="jumbotron jumbotron-fluid text-center" style="background-color:LightSkyBlue;">
                     <!--SEARCH SUGGESTIONS-->
                 </div>
             </div>

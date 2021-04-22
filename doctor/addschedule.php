@@ -10,7 +10,7 @@ $usersession = $_SESSION['doctorSession'];
 $res=mysqli_query($con,"SELECT * FROM doctor WHERE doctorId=".$usersession);
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 // insert
-
+$docid= $_GET['docid'];
 
 if (isset($_POST['submit'])) {
 $date = mysqli_real_escape_string($con,$_POST['date']);
@@ -20,8 +20,8 @@ $endtime     = mysqli_real_escape_string($con,$_POST['endtime']);
 $bookavail         = mysqli_real_escape_string($con,$_POST['bookavail']);
 
 //INSERT
-$query = " INSERT INTO doctorschedule (  scheduleDate, scheduleDay, startTime, endTime,  bookAvail)
-VALUES ( '$date', '$scheduleday', '$starttime', '$endtime', '$bookavail' ) ";
+$query = " INSERT INTO doctorschedule (  maindoctorId, scheduleDate, scheduleDay, startTime, endTime,  bookAvail)
+VALUES ( '$docid','$date', '$scheduleday', '$starttime', '$endtime', '$bookavail' ) ";
 
 $result = mysqli_query($con, $query);
 // echo $result;
@@ -66,7 +66,7 @@ alert('Added fail. Please try again.');
         <link href="assets/css/style.css" rel="stylesheet">
         <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
         <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
-        <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
+        <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
 
         <!--Font Awesome (added because you use icons in your prepend/append)-->
         <link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
@@ -93,15 +93,15 @@ alert('Added fail. Please try again.');
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
-                    
-                    
+
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['doctorFirstName']; ?> <?php echo $userRow['doctorLastName']; ?><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="doctorprofile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
                             </li>
-                            
+
                             <li class="divider"></li>
                             <li>
                                 <a href="logout.php?logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
@@ -129,7 +129,7 @@ alert('Added fail. Please try again.');
 
             <div id="page-wrapper">
                 <div class="container-fluid">
-                    
+
                     <!-- Page Heading -->
                     <div class="row">
                         <div class="col-lg-12">
@@ -275,7 +275,7 @@ alert('Added fail. Please try again.');
                                </div>
                               </div>
                              </div>
-                            </div>                        
+                            </div>
                         <!-- panel content end -->
                         <!-- panel end -->
                         </div>
@@ -308,15 +308,15 @@ alert('Added fail. Please try again.');
                                     <th><input type="text" class="form-control" placeholder="bookAvail" disabled></th>
                                 </tr>
                             </thead>
-                            
-                            <?php 
-                            $result=mysqli_query($con,"SELECT * FROM doctorschedule");
-                            
 
-                                  
+                            <?php
+                            $result=mysqli_query($con,"SELECT * FROM doctorschedule");
+
+
+
                             while ($doctorschedule=mysqli_fetch_array($result)) {
-                                
-                              
+
+
                                 echo "<tbody>";
                                 echo "<tr>";
                                     echo "<td>" . $doctorschedule['scheduleId'] . "</td>";
@@ -328,8 +328,8 @@ alert('Added fail. Please try again.');
                                     echo "<form method='POST'>";
                                     echo "<td class='text-center'><a href='#' id='".$doctorschedule['scheduleId']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
                             </td>";
-                               
-                            } 
+
+                            }
                                 echo "</tr>";
                            echo "</tbody>";
                        echo "</table>";
@@ -349,10 +349,10 @@ alert('Added fail. Please try again.');
         <!-- /#wrapper -->
 
 
-       
+
         <!-- jQuery -->
         <script src="../patient/assets/js/jquery.js"></script>
-        
+
         <!-- Bootstrap Core JavaScript -->
         <script src="../patient/assets/js/bootstrap.min.js"></script>
         <script src="assets/js/bootstrap-clockpicker.js"></script>

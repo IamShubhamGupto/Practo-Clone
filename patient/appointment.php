@@ -8,8 +8,10 @@ $session= $_SESSION['patientSession'];
 if (isset($_GET['scheduleDate']) && isset($_GET['appid'])) {
 	$appdate =$_GET['scheduleDate'];
 	$appid = $_GET['appid'];
+	$docid =$_GET['docid'];
 }
-
+#echo $appdate;
+#echo $docid;
 
 if (isset($_GET['previd'])) {
 	$previd =$_GET['previd'];
@@ -19,13 +21,14 @@ if (isset($_GET['prevscheduleid'])) {
 }
 
 
-if (isset($_GET['$docid'])) {
-	$docid =$_GET['$docid'];
-}
+
 // on b.icPatient = a.icPatient
-$res = mysqli_query($con,"SELECT a.*, b.*,c.*,d.* FROM doctorschedule a INNER JOIN patient b INNER JOIN doctor c INNER JOIN appointment d
-WHERE a.scheduleDate='$appdate' AND a.scheduleId=$appid AND b.icPatient=$session AND c.maindoctorId = a.maindoctorId AND d.scheduleId = $appid;");
+$res = mysqli_query($con,"SELECT a.* , b.* ,c.*,d.* FROM doctorschedule a INNER JOIN patient b INNER JOIN doctor c INNER JOIN appointment d
+	WHERE a.scheduleDate='$appdate' AND a.scheduleId= $appid ;");
+//$res = mysqli_query($con,"SELECT a.*, b.*,c.*,d.* FROM doctorschedule a INNER JOIN patient b INNER JOIN doctor c INNER JOIN appointment d
+//	WHERE a.scheduleDate=$appdate AND a.scheduleId=$appid AND b.icPatient=$session AND c.maindoctorId = a.maindoctorId AND d.scheduleId = $appid;");
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
+
 
 $useremail= $userRow['patientEmail'];
 $docemail= $userRow['doctorEmail'];
@@ -61,7 +64,7 @@ if( $result )
 alert('Appointment made successfully.');
 </script>
 <?php
-header("Location: patientapplist.php");
+header("Location: patientapplist.php?docid=". $docid);
 }
 else
 {
@@ -169,7 +172,7 @@ $sendDate = $date->format('d/m/Y H:i');
 						<ul class="nav navbar-nav">
 							<li><a href="patient.php">Home</a></li>
 							<!-- <li><a href="profile.php?patientId=<?php echo $userRow['icPatient']; ?>" >Profile</a></li> -->
-							<li><a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?>">Appointment</a></li>
+							<li><a href="patientapplist.php?patientId=<?php echo $userRow['icPatient']; ?> &docid= <?php echo $docid ?>">Appointment</a></li>
 						</ul>
 					</ul>
 
@@ -203,13 +206,10 @@ $sendDate = $date->format('d/m/Y H:i');
 						<div class="col-md-3 col-sm-3">
 
 							<div class="user-wrapper">
-								<img src="assets/img/1.jpg" class="img-responsive" />
+
 								<div class="description">
 									<h4><?php echo $userRow['patientFirstName']; ?> <?php echo $userRow['patientLastName']; ?></h4>
-									<h5> <strong> Website Designer </strong></h5>
-									<p>
-										Pellentesque elementum dapibus convallis.
-									</p>
+
 									<hr />
 									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Update Profile</button>
 								</div>

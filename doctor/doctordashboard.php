@@ -10,7 +10,7 @@ $usersession = $_SESSION['doctorSession'];
 $res=mysqli_query($con,"SELECT * FROM doctor WHERE doctorId=".$usersession);
 $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
-
+$docid=$_GET['docid'];
 
 ?>
 <!DOCTYPE html>
@@ -48,15 +48,15 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
-                    
-                    
+
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $userRow['doctorFirstName']; ?> <?php echo $userRow['doctorLastName']; ?><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="doctorprofile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
                             </li>
-                           
+
                             <li class="divider"></li>
                             <li>
                                 <a href="logout.php?logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
@@ -71,7 +71,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                             <a href="doctordashboard.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="addschedule.php"><i class="fa fa-fw fa-table"></i> Doctor Schedule</a>
+                            <a href="addschedule.php?docid=<?php echo $docid ?>"><i class="fa fa-fw fa-table"></i> Doctor Schedule</a>
                         </li>
                         <li>
                             <a href="patientlist.php"><i class="fa fa-fw fa-edit"></i> Patient List</a>
@@ -84,7 +84,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
 
             <div id="page-wrapper">
                 <div class="container-fluid">
-                    
+
                     <!-- Page Heading -->
                     <div class="row">
                         <div class="col-lg-12">
@@ -124,11 +124,14 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                                     <th><input type="text" class="form-control" placeholder="End" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Status" disabled></th>
                                     <th><input type="text" class="form-control" placeholder="Complete" disabled></th>
+                                    <th><input type="text" class="form-control" placeholder="Chat" disabled></th>
+
+
                                     <th><input type="text" class="form-control" placeholder="Delete" disabled></th>
                                 </tr>
                             </thead>
-                            
-                            <?php 
+
+                            <?php
                             $res=mysqli_query($con,"SELECT a.*, b.*,c.*
                                                     FROM patient a
                                                     JOIN appointment b
@@ -141,7 +144,7 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                                     exit();
                                 }
                             while ($appointment=mysqli_fetch_array($res)) {
-                                
+
                                 if ($appointment['status']=='process') {
                                     $status="danger";
                                     $icon='remove';
@@ -153,13 +156,13 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                                     $checked = 'disabled';
                                 }
 
-                                
-                              
-                                
-                             
-                                
 
-                                
+
+
+
+
+
+
 
                                 echo "<tbody>";
                                 echo "<tr class='$status'>";
@@ -171,13 +174,16 @@ $userRow=mysqli_fetch_array($res,MYSQLI_ASSOC);
                                     echo "<td>" . $appointment['scheduleDate'] . "</td>";
                                     echo "<td>" . $appointment['startTime'] . "</td>";
                                     echo "<td>" . $appointment['endTime'] . "</td>";
+
                                     echo "<td><span class='glyphicon glyphicon-".$icon."' aria-hidden='true'></span>".' '."". $appointment['status'] . "</td>";
                                     echo "<form method='POST'>";
                                     echo "<td class='text-center'><input type='checkbox' name='enable' id='enable' value='".$appointment['appId']."' onclick='chkit(".$appointment['appId'].",this.checked);' ".$checked."></td>";
+                                    echo "<td><a href='chat.php?appid=".$appointment['appId']."&docid=".$usersession."&patid=".$appointment['patientIc']."' target='_blank'> <button type= 'button'style='background-color:lightblue'>"  . "Chat" . "</button> </a> </td>";
+
                                     echo "<td class='text-center'><a href='#' id='".$appointment['appId']."' class='delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>
                             </td>";
-                               
-                            } 
+
+                            }
                                 echo "</tr>";
                            echo "</tbody>";
                        echo "</table>";
@@ -206,7 +212,7 @@ function chkit(uid, chk) {
 </script>
 
 
- 
+
                 </div>
                 <!-- /.container-fluid -->
             </div>
@@ -215,7 +221,7 @@ function chkit(uid, chk) {
         <!-- /#wrapper -->
 
 
-       
+
         <!-- jQuery -->
         <script src="../patient/assets/js/jquery.js"></script>
         <script type="text/javascript">
