@@ -13,7 +13,7 @@
     CURLOPT_CUSTOMREQUEST => "POST",
     CURLOPT_POSTFIELDS => "{}",
     CURLOPT_HTTPHEADER => array(
-      "authorization: Bearer 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"
+      "authorization: Bearer <>"
     ),
   ));
 
