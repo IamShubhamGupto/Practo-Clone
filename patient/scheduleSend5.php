@@ -13,6 +13,7 @@
     CURLOPT_CUSTOMREQUEST => "POST",
     CURLOPT_POSTFIELDS => "{}",
     CURLOPT_HTTPHEADER => array(
+      // this api key is now disabled (:
       "authorization: Bearer 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"
     ),
   ));
@@ -87,6 +88,7 @@
     CURLOPT_CUSTOMREQUEST => "POST",
     CURLOPT_POSTFIELDS => $curloptpostfields,
     CURLOPT_HTTPHEADER => array(
+      // this api key is now disabled (:
       "authorization: Bearer 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",
       "content-type: application/json"
     ),
