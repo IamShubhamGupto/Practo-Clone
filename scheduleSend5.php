@@ -2,6 +2,11 @@
 // function makeNotification(){
   //get unique batch id
   session_start();
+  $myfile = fopen("key.txt", "r") or die("Unable to open file!");
+  $key = fgets($myfile);
+    //echo $key;
+  fclose($myfile);
+  echo $key;
   $curl = curl_init();
   curl_setopt_array($curl, array(
     CURLOPT_URL => "https://api.sendgrid.com/v3/mail/batch",
@@ -13,7 +18,8 @@
     CURLOPT_CUSTOMREQUEST => "POST",
     CURLOPT_POSTFIELDS => "{}",
     CURLOPT_HTTPHEADER => array(
-      "authorization: Bearer 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"
+      "authorization: Bearer $key",
+      "content-type: application/json"
     ),
   ));
 
@@ -21,9 +27,10 @@
   $err = curl_error($curl);
   $batch_id = "";
   curl_close($curl);
-
+  echo $response;
   if ($err) {
-    echo "cURL Error #:" . $err;
+    // echo "cURL Error #:" . $err;
+    echo "Sent failure\n";
   } else {
       // echo $response;
       $batch_id_response =  json_decode($response);
@@ -87,7 +94,7 @@
     CURLOPT_CUSTOMREQUEST => "POST",
     CURLOPT_POSTFIELDS => $curloptpostfields,
     CURLOPT_HTTPHEADER => array(
-      "authorization: Bearer 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",
+      "authorization: Bearer $key",
       "content-type: application/json"
     ),
   ));
@@ -98,9 +105,10 @@
   curl_close($curl);
 
   if ($err) {
-    echo "cURL Error #:" . $err;
+    //echo "cURL Error #:" . $err;
+    echo "Sent failure\n";
   } else {
-    echo $response;
+    //echo $response;
     echo "Sent success\n";
   }
 
